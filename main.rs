@@ -49,22 +49,22 @@ fn tokenizer(input: &str) -> Vec<Token> {
 
 }
 
-fn postfixer(mut tokens : Vec<Token>) -> Vec<Token> { //c
+fn postfixer(mut tokens : Vec<Token>) -> Vec<Token> {
     tokens.reverse(); //c
-    let mut tobeoutput: Vec<Token> = Vec::new(); //c
-    let mut operators: Vec<Token> = Vec::new(); //c
+    let mut tobeoutput: Vec<Token> = Vec::new();
+    let mut operators: Vec<Token> = Vec::new();
     
-    while let Some(last) = tokens.pop() { //c
+    while let Some(last) = tokens.pop() {
         match last { //c
-            Token::Num(_) => tobeoutput.push(last), //c
+            Token::Num(_) => tobeoutput.push(last),
             Token::Plus | Token::Minus | Token::Multiply | Token::Divide | Token::Leftparen => {
                 operators.push(last);
             }, //c
             Token::Rightparen => {
-                while let Some(op) = operators.pop() { //c
-                    if let Token::Leftparen = op { //c
-                        break; //c
-                    } else { //c
+                while let Some(op) = operators.pop() {
+                    if let Token::Leftparen = op {
+                        break;
+                    } else {
                     tobeoutput.push(op);
                     }
                 }
@@ -153,29 +153,3 @@ fn main() {
     let output = solver(postfixer(tokenizer(trinput)));
     println!("{:?}", output);
 }
-
-/*use rug::Float;
-use std::io;
-use std::str::FromStr;
-
-fn main() {
-    // Create a Float with specified precision
-    let mut a = Float::with_prec(512);
-
-    let mut input = String::new();
-    println!("Enter a floating-point number:");
-    io::stdin().read_line(&mut input).expect("Error reading input");
-    let trinput = input.trim();
-
-    // Attempt to parse the input as a Float
-    a = match Float::from_str(trinput) {
-        Ok(num) => num,
-        Err(_) => {
-            println!("Invalid input format.");
-            return;
-        }
-    };
-
-    println!("You entered: {}", a);
-}
- */
