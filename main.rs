@@ -14,6 +14,21 @@ enum Token {
     Leftparen,
     Rightparen,
 }
+
+#[derive(Clone, Copy, Eq, PartialEq, Debug)]
+enum BinOp {
+    Plus,
+    Minus,
+    Multiply,
+    Divide,
+}
+
+#[derive(Clone, PartialEq, Debug)]
+enum Expression {
+    Value(Float),
+    Binary(BinOp, Option<Box<Expression>>, Option<Box<Expression>>),
+}
+
 fn tokenizer(input: &str) -> Vec<Token> {
     let mut tokens: Vec<Token> = Vec::new();
     let mut chars = input.chars().peekable();
